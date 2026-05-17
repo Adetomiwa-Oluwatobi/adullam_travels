@@ -1,0 +1,50 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Edit Service{% endblock %}
+{% block page_title %}Edit Service{% endblock %}
+{% block breadcrumb %}<a href="{% url 'dashboard:services' %}">Services</a> / {{ obj.title }}{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div class="form-section" style="max-width:640px;">
+    <div class="form-section__title"><i class="fas fa-concierge-bell"></i> Service Details</div>
+    <div class="field">
+      <label>Service Title</label>
+      <input type="text" name="title" value="{{ obj.title }}" required />
+    </div>
+    <div class="field">
+      <label>Short Description <span class="optional">(shown on homepage cards)</span></label>
+      <input type="text" name="short_description" value="{{ obj.short_description }}" required />
+    </div>
+    <div class="field">
+      <label>Full Description <span class="optional">(shown on services page)</span></label>
+      <textarea name="full_description" required>{{ obj.full_description }}</textarea>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Icon <span class="optional">(Font Awesome class)</span></label>
+        <input type="text" name="icon" value="{{ obj.icon }}" placeholder="fa-passport" />
+        <div class="field__hint">Browse icons at <strong>fontawesome.com/icons</strong> — copy the class name e.g. <code>fa-plane</code></div>
+      </div>
+      <div class="field">
+        <label>Sort Order</label>
+        <input type="number" name="order" value="{{ obj.order }}" min="0" />
+      </div>
+    </div>
+
+    <input type="checkbox" name="active" id="activeCheck" {% if obj.active %}checked{% endif %} style="display:none;" />
+    <div class="toggle-field" data-toggle="activeCheck">
+      <div>
+        <div class="toggle-field__label">Show on Website</div>
+        <div class="toggle-field__desc">Hidden services won't appear on any page</div>
+      </div>
+      <div class="toggle {% if obj.active %}on{% endif %}"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-top:20px;max-width:640px;">
+    <button type="submit" class="btn btn-orange"><i class="fas fa-save"></i> Save Service</button>
+    <a href="{% url 'dashboard:services' %}" class="btn btn-ghost">Cancel</a>
+  </div>
+</form>
+{% endblock %}

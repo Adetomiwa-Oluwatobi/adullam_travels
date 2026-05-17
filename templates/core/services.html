@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+{% block title %}Services — Adullam Travels{% endblock %}
+{% block content %}
+
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800&q=80')">
+  <div class="page-hero__inner">
+    <div class="page-hero__eyebrow">What We Offer</div>
+    <h1 class="page-hero__title">Our <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Services</em></h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header reveal">
+      <div class="section__eyebrow">Full-Service Travel</div>
+      <h2 class="section__title">Everything You Need,<br>Nothing You Don't</h2>
+      <p class="section__subtitle">We cover every aspect of your journey — from paperwork to pillow.</p>
+    </div>
+    <div class="services-grid">
+      {% for service in services %}
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas {{ service.icon }}"></i></div>
+        <h3 class="service-card__title">{{ service.title }}</h3>
+        <p class="service-card__desc">{{ service.full_description }}</p>
+      </div>
+      {% empty %}
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-passport"></i></div>
+        <h3 class="service-card__title">Visa Assistance</h3>
+        <p class="service-card__desc">We handle Schengen, UK, US, Canada, UAE and more. Document checklist, cover letter writing, appointment booking, and follow-up — all included. We have a 98% visa approval rate for our clients.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-map-marked-alt"></i></div>
+        <h3 class="service-card__title">Travel Planning</h3>
+        <p class="service-card__desc">Bespoke itinerary design built around your travel dates, budget, and interests. We think through everything — transfers, meal recommendations, must-see spots, and time to rest.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-hotel"></i></div>
+        <h3 class="service-card__title">Hotel Bookings</h3>
+        <p class="service-card__desc">Access to luxury, boutique, and business hotels worldwide at competitive rates. We match your accommodation to your itinerary so every location makes sense.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-plane-departure"></i></div>
+        <h3 class="service-card__title">Flight Coordination</h3>
+        <p class="service-card__desc">Smart routing, business class advisory, transit visa guidance, and flight monitoring. We find the best flights and make sure you're always prepared for them.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-umbrella-beach"></i></div>
+        <h3 class="service-card__title">Tours & Excursions</h3>
+        <p class="service-card__desc">Guided city tours, private yacht charters, safari bookings, desert experiences, and cultural immersions. We connect you to the soul of every destination.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="service-card__title">Travel Insurance</h3>
+        <p class="service-card__desc">Comprehensive coverage for medical emergencies, trip cancellations, lost luggage, and more. Travel confidently knowing you're protected wherever you go.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner__eyebrow">Let's Get Started</div>
+  <h2 class="cta-banner__title">Not Sure What You Need?<br>Just Ask Us.</h2>
+  <a href="{% url 'core:contact' %}" class="btn-white">DM Us on Instagram</a>
+</section>
+
+{% endblock %}

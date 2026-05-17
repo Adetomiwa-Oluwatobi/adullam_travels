@@ -1,0 +1,298 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Adullam Travels — Beyond Borders. Beyond Ordinary.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__slides">
+    <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=80')"></div>
+    <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=1800&q=80')"></div>
+    <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1800&q=80')"></div>
+    <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1800&q=80')"></div>
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__eyebrow">Adullam Travels &mdash; Where rest meet readiness</div>
+    <h1 class="hero__title">
+      {{ hero_title|default:"Your World<br>Awaits <em>You.</em>" }}
+    </h1>
+    <p class="hero__subtitle">{{ hero_subtitle|default:"Premium travel planning, seamless visa assistance, and curated experiences that take you from Nigeria to anywhere in the world." }}</p>
+    <div class="hero__actions">
+      <a href="{% url 'core:contact' %}" class="btn-primary">Plan My Trip</a>
+      <a href="{% url 'core:destinations' %}" class="btn-outline">Explore Destinations</a>
+    </div>
+  </div>
+  <div class="hero__dots">
+    <button class="hero__dot" aria-label="Slide 1"></button>
+    <button class="hero__dot" aria-label="Slide 2"></button>
+    <button class="hero__dot" aria-label="Slide 3"></button>
+    <button class="hero__dot" aria-label="Slide 4"></button>
+  </div>
+  <div class="hero__scroll">
+    <div class="hero__scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats__inner">
+    <div class="stat">
+      <div class="stat__number" data-target="500" data-suffix="+">0</div>
+      <div class="stat__label">Happy Travellers</div>
+    </div>
+    <div class="stat">
+      <div class="stat__number" data-target="80" data-suffix="+">0</div>
+      <div class="stat__label">Destinations Covered</div>
+    </div>
+    <div class="stat">
+      <div class="stat__number" data-target="98" data-suffix="%">0</div>
+      <div class="stat__label">Visa Success Rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat__number" data-target="5" data-suffix="★">0</div>
+      <div class="stat__label">Client Satisfaction</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header reveal">
+      <div class="section__eyebrow">What We Do</div>
+      <h2 class="section__title">Everything Your Journey Needs</h2>
+      <p class="section__subtitle">From the first click to your hotel check-in — we handle every detail with precision.</p>
+    </div>
+    <div class="services-grid">
+      {% for service in services %}
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas {{ service.icon }}"></i></div>
+        <h3 class="service-card__title">{{ service.title }}</h3>
+        <p class="service-card__desc">{{ service.short_description }}</p>
+      </div>
+      {% empty %}
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-passport"></i></div>
+        <h3 class="service-card__title">Visa Assistance</h3>
+        <p class="service-card__desc">Expert guidance on visa applications for Schengen, UK, US, Canada, Dubai and more. We handle the paperwork so you don't have to.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-map-marked-alt"></i></div>
+        <h3 class="service-card__title">Travel Planning</h3>
+        <p class="service-card__desc">Bespoke itineraries crafted around your lifestyle, budget, and bucket list. Every trip is a masterpiece.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-hotel"></i></div>
+        <h3 class="service-card__title">Hotel Bookings</h3>
+        <p class="service-card__desc">Curated luxury and boutique hotel recommendations with the best rates. Wake up where you deserve to be.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-plane"></i></div>
+        <h3 class="service-card__title">Flight Coordination</h3>
+        <p class="service-card__desc">Smart flight routing, business class upgrades, and layover management to make every journey smooth.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-umbrella-beach"></i></div>
+        <h3 class="service-card__title">Tours & Excursions</h3>
+        <p class="service-card__desc">Group tours, private excursions, and cultural experiences that go beyond the tourist trail.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="service-card__title">Travel Insurance</h3>
+        <p class="service-card__desc">Comprehensive travel protection for medical emergencies, cancellations, and unexpected events worldwide.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DESTINATIONS -->
+<section class="section section--light">
+  <div class="section__inner">
+    <div class="section__header reveal">
+      <div class="section__eyebrow">Where We Take You</div>
+      <h2 class="section__title">Featured <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Destinations</em></h2>
+      <p class="section__subtitle">From the dunes of Dubai to the streets of Paris — the world is your itinerary.</p>
+    </div>
+    <div class="destinations-grid">
+      {% for dest in featured_destinations %}
+      <div class="destination-card">
+        <div class="destination-card__img" style="background-image:url('{{ dest.image_url }}');background-size:cover;background-position:center;width:100%;height:100%;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">{{ dest.country }}</div>
+          <div class="destination-card__name">{{ dest.name }}</div>
+          <div class="destination-card__tag">{{ dest.tagline }}</div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="destination-card">
+        <div style="background-image:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80');background-size:cover;background-position:center;width:100%;height:100%;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">United Arab Emirates</div>
+          <div class="destination-card__name">Dubai</div>
+          <div class="destination-card__tag">Where luxury meets the desert</div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=800&q=80');background-size:cover;background-position:center;width:100%;height:100%;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">France</div>
+          <div class="destination-card__name">Paris</div>
+          <div class="destination-card__tag">The city that never stops inspiring</div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div style="background-image:url('https://images.unsplash.com/photo-1526129318344-0be37fc6e8f0?w=800&q=80');background-size:cover;background-position:center;width:100%;height:100%;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">United Kingdom</div>
+          <div class="destination-card__name">London</div>
+          <div class="destination-card__tag">History, culture, and endless energy</div>
+        </div>
+      </div>
+      <div class="destination-card">
+        <div style="background-image:url('https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80');background-size:cover;background-position:center;width:100%;height:100%;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">Turkey</div>
+          <div class="destination-card__name">Istanbul</div>
+          <div class="destination-card__tag">Where East meets West</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:50px;" class="reveal">
+      <a href="{% url 'core:destinations' %}" class="btn-primary">View All Destinations</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ADULLAM -->
+<section class="section">
+  <div class="section__inner">
+    <div class="why-grid">
+      <div class="why-image reveal-left">
+        <div class="why-image__main" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80');"></div>
+        <div class="why-image__accent" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c4a49f69?w=600&q=80');"></div>
+        <div class="why-badge">
+          <div class="why-badge__num">5★</div>
+          <div class="why-badge__label">Rated Service</div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="section__eyebrow">Why Choose Us</div>
+        <h2 class="section__title">Travel With Confidence,<br>Travel With <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Adullam.</em></h2>
+        <p class="section__subtitle">We don't just book trips — we craft experiences that align with who you are and where you want to go.</p>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-item__icon"><i class="fas fa-check"></i></div>
+            <div>
+              <div class="why-item__title">Nigeria-Rooted, World-Ready</div>
+              <div class="why-item__desc">We understand the unique travel needs of Nigerians — from naira planning to visa rejection history — and we navigate it all.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__icon"><i class="fas fa-fingerprint"></i></div>
+            <div>
+              <div class="why-item__title">Personalised From Day One</div>
+              <div class="why-item__desc">No cookie-cutter packages. Every trip is designed specifically around you — your dates, budget, and dream destinations.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__icon"><i class="fas fa-headset"></i></div>
+            <div>
+              <div class="why-item__title">Always Available</div>
+              <div class="why-item__desc">Whether it's 3AM before your flight or a last-minute change of plans — we're a DM away on Instagram.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item__icon"><i class="fas fa-award"></i></div>
+            <div>
+              <div class="why-item__title">Proven Track Record</div>
+              <div class="why-item__desc">Hundreds of successful trips, visa approvals, and five-star reviews from travellers across Nigeria and beyond.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section--dark">
+  <div class="section__inner">
+    <div class="section__header reveal">
+      <div class="section__eyebrow">What Travellers Say</div>
+      <h2 class="section__title" style="color:white;">Words From Our <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Wanderers</em></h2>
+    </div>
+    <div class="testimonials-track">
+      {% for t in testimonials %}
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+        <p class="testimonial-card__text">"{{ t.message }}"</p>
+        <div class="testimonial-card__author">
+          {% if t.avatar_url %}
+          <div class="testimonial-card__avatar" style="background-image:url('{{ t.avatar_url }}');"></div>
+          {% else %}
+          <div class="testimonial-card__avatar">{{ t.name|first }}</div>
+          {% endif %}
+          <div>
+            <div class="testimonial-card__name">{{ t.name }}</div>
+            <div class="testimonial-card__loc">{{ t.location }}</div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="testimonial-card__text">"Adullam Travels handled everything perfectly. My Dubai visa came through in 3 days and the hotel they picked was incredible. I'll never travel without them again."</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">A</div>
+          <div>
+            <div class="testimonial-card__name">Amaka Okonkwo</div>
+            <div class="testimonial-card__loc">Lagos, Nigeria</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="testimonial-card__text">"I was nervous about my UK visa after a previous rejection. Adullam guided me through every document and I got approved. Professional and trustworthy."</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">T</div>
+          <div>
+            <div class="testimonial-card__name">Tunde Adeyemi</div>
+            <div class="testimonial-card__loc">Abuja, Nigeria</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <p class="testimonial-card__text">"From planning to landing, they were with me every step. The Maldives trip they put together was beyond anything I imagined. Pure luxury, flawlessly executed."</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">C</div>
+          <div>
+            <div class="testimonial-card__name">Chisom Eze</div>
+            <div class="testimonial-card__loc">Port Harcourt, Nigeria</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="cta-banner__eyebrow">Your Journey Starts Here</div>
+  <h2 class="cta-banner__title">{{ cta_title|default:"Ready to Go<br>Somewhere Beautiful?" }}</h2>
+  <a href="{% url 'core:contact' %}" class="btn-white">Get a Free Quote</a>
+</section>
+
+{% endblock %}

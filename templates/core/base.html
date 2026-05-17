@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Adullam Travels — Beyond Borders{% endblock %}</title>
+  <meta name="description" content="Premium travel planning, visa assistance, hotel bookings and curated tours. From Nigeria to anywhere in the world." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="mainNav">
+    <div class="nav__inner">
+      <a href="{% url 'core:home' %}" class="nav__logo">
+        <span class="nav__logo-text">Adullam</span>
+        <span class="nav__logo-sub">TRAVELS</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="{% url 'core:home' %}" class="nav__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'core:services' %}" class="nav__link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
+        <li><a href="{% url 'core:destinations' %}" class="nav__link {% if request.resolver_match.url_name == 'destinations' %}active{% endif %}">Destinations</a></li>
+        <li><a href="{% url 'core:about' %}" class="nav__link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+        <li><a href="{% url 'core:contact' %}" class="nav__cta">Get a Quote</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="{% url 'core:home' %}">Home</a></li>
+      <li><a href="{% url 'core:services' %}">Services</a></li>
+      <li><a href="{% url 'core:destinations' %}">Destinations</a></li>
+      <li><a href="{% url 'core:about' %}">About</a></li>
+      <li><a href="{% url 'core:contact' %}">Get a Quote</a></li>
+    </ul>
+  </div>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Floating Instagram CTA -->
+  <a href="https://www.instagram.com/adullamtravels?igsh=YzljYTk1ODg3Zg==" target="_blank" rel="noopener" class="ig-float" aria-label="Chat on Instagram">
+    <i class="fab fa-instagram"></i>
+    <span>DM Us</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo">Adullam <span>Travels</span></div>
+        <p class="footer__tagline">Beyond Borders. Beyond Ordinary.</p>
+        <a href="https://www.instagram.com/adullamtravels?igsh=YzljYTk1ODg3Zg==" target="_blank" rel="noopener" class="footer__ig">
+          <i class="fab fa-instagram"></i> @adullamtravels
+        </a>
+      </div>
+      <div class="footer__links">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="{% url 'core:home' %}">Home</a></li>
+          <li><a href="{% url 'core:services' %}">Services</a></li>
+          <li><a href="{% url 'core:destinations' %}">Destinations</a></li>
+          <li><a href="{% url 'core:about' %}">About</a></li>
+          <li><a href="{% url 'core:contact' %}">Get a Quote</a></li>
+        </ul>
+      </div>
+      <div class="footer__services">
+        <h4>Services</h4>
+        <ul>
+          <li>Visa Assistance</li>
+          <li>Travel Planning</li>
+          <li>Hotel Bookings</li>
+          <li>Tours & Trips</li>
+          <li>Flight Coordination</li>
+        </ul>
+      </div>
+      <div class="footer__contact">
+        <h4>Connect</h4>
+        <p>Based in Nigeria.<br/>Serving the world.</p>
+        <a href="{% url 'core:contact' %}" class="footer__cta">Plan Your Trip →</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2025 Adullam Travels. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

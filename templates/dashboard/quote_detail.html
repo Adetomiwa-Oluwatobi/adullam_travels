@@ -1,0 +1,87 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Enquiry from {{ quote.name }}{% endblock %}
+{% block page_title %}Enquiry from {{ quote.name }}{% endblock %}
+{% block breadcrumb %}<a href="{% url 'dashboard:quotes' %}">Quote Requests</a> / {{ quote.name }}{% endblock %}
+
+{% block topbar_actions %}
+<a href="mailto:{{ quote.email }}?subject=Re: Your travel enquiry to {{ quote.destination }}" class="btn btn-orange btn-sm">
+  <i class="fas fa-reply"></i> Reply by Email
+</a>
+<a href="https://ig.me/m/adullamtravels" target="_blank" class="btn btn-ghost btn-sm">
+  <i class="fab fa-instagram"></i> Reply on Instagram
+</a>
+{% endblock %}
+
+{% block content %}
+<div style="max-width:760px;">
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card__header">
+      <div class="card__title">Contact Details</div>
+      <span class="badge {% if quote.viewed %}badge-gray{% else %}badge-orange{% endif %}">
+        {% if quote.viewed %}Read{% else %}New{% endif %}
+      </span>
+    </div>
+    <div class="card__body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-item__label">Full Name</div>
+          <div class="detail-item__value">{{ quote.name }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item__label">Email</div>
+          <div class="detail-item__value"><a href="mailto:{{ quote.email }}" style="color:var(--orange);">{{ quote.email }}</a></div>
+        </div>
+        {% if quote.phone %}
+        <div class="detail-item">
+          <div class="detail-item__label">Phone</div>
+          <div class="detail-item__value">{{ quote.phone }}</div>
+        </div>
+        {% endif %}
+        <div class="detail-item">
+          <div class="detail-item__label">Submitted</div>
+          <div class="detail-item__value">{{ quote.submitted_at|date:"F j, Y — g:i A" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card__header"><div class="card__title">Trip Details</div></div>
+    <div class="card__body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-item__label">Destination</div>
+          <div class="detail-item__value">{{ quote.destination }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item__label">Number of Travellers</div>
+          <div class="detail-item__value">{{ quote.travelers }} person{% if quote.travelers > 1 %}s{% endif %}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item__label">Expected Travel Date</div>
+          <div class="detail-item__value">{{ quote.travel_date|date:"F j, Y"|default:"Not specified" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card__header"><div class="card__title">Message</div></div>
+    <div class="card__body">
+      <div class="detail-message">{{ quote.message }}</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;align-items:center;">
+    <a href="mailto:{{ quote.email }}?subject=Re: Your travel enquiry to {{ quote.destination }}&body=Hi {{ quote.name }},%0A%0AThank you for reaching out to Adullam Travels!%0A%0A" class="btn btn-orange">
+      <i class="fas fa-envelope"></i> Reply by Email
+    </a>
+    <a href="{% url 'dashboard:quote_delete' quote.pk %}" class="btn btn-danger">
+      <i class="fas fa-trash"></i> Delete
+    </a>
+    <a href="{% url 'dashboard:quotes' %}" class="btn btn-ghost">
+      <i class="fas fa-arrow-left"></i> Back to Enquiries
+    </a>
+  </div>
+</div>
+{% endblock %}

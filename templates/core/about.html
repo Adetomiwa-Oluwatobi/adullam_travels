@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% block title %}About — Adullam Travels{% endblock %}
+{% block content %}
+
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1800&q=80')">
+  <div class="page-hero__inner">
+    <div class="page-hero__eyebrow">Our Story</div>
+    <h1 class="page-hero__title">About <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Adullam</em></h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section__inner">
+    <div class="about-story">
+      <div class="reveal-left">
+        <div class="about-story__img" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80');"></div>
+      </div>
+      <div class="reveal-right">
+        <div class="section__eyebrow">Who We Are</div>
+        <h2 class="section__title">{{ about_title|default:"Born in Nigeria.<br>Built for the World." }}</h2>
+        <p class="about-story__text">{{ about_body|default:"Adullam Travels was born from a simple but powerful belief: every Nigerian deserves to experience the world without the stress, confusion, or barriers that come with travel." }}</p>
+        <p class="about-story__text">{{ about_body2|default:"From visa rejections to overpriced packages that don't deliver — we've seen how travel can go wrong. So we built something different. A travel company rooted in trust, personalised service, and a genuine passion for getting people to where they want to be." }}</p>
+        <p class="about-story__text">{{ about_body3|default:"Whether you're planning your first trip abroad or your fiftieth, we bring the expertise, the connections, and the care to make every journey extraordinary." }}</p>
+        <div class="values-grid">
+          <div class="value-card">
+            <i class="fas fa-handshake"></i>
+            <h4>Trust</h4>
+            <p class="value-card__desc">We're transparent in everything — pricing, timelines, and what to expect.</p>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-star"></i>
+            <h4>Excellence</h4>
+            <p class="value-card__desc">We don't do average. Every detail of your trip is handled with care.</p>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-heart"></i>
+            <h4>Passion</h4>
+            <p class="value-card__desc">We love travel. And that love shows in how we serve every client.</p>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-globe-africa"></i>
+            <h4>Access</h4>
+            <p class="value-card__desc">Making the world more accessible to Africans, one trip at a time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats__inner">
+    <div class="stat"><div class="stat__number" data-target="500" data-suffix="+">0</div><div class="stat__label">Happy Travellers</div></div>
+    <div class="stat"><div class="stat__number" data-target="80" data-suffix="+">0</div><div class="stat__label">Destinations</div></div>
+    <div class="stat"><div class="stat__number" data-target="98" data-suffix="%">0</div><div class="stat__label">Visa Success Rate</div></div>
+    <div class="stat"><div class="stat__number" data-target="3" data-suffix="+">0</div><div class="stat__label">Years of Experience</div></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner__eyebrow">Start Your Journey</div>
+  <h2 class="cta-banner__title">Let's Plan Something<br>Unforgettable Together.</h2>
+  <a href="{% url 'core:contact' %}" class="btn-white">Get a Free Quote</a>
+</section>
+
+{% endblock %}

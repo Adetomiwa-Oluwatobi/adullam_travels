@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Testimonials{% endblock %}
+{% block page_title %}Testimonials{% endblock %}
+{% block breadcrumb %}Manage client reviews shown on the website{% endblock %}
+
+{% block topbar_actions %}
+<a href="{% url 'dashboard:testimonial_add' %}" class="btn btn-orange btn-sm">
+  <i class="fas fa-plus"></i> Add Testimonial
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Location</th>
+          <th>Review</th>
+          <th>Rating</th>
+          <th>Visible</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in testimonials %}
+        <tr>
+          <td><strong>{{ t.name }}</strong></td>
+          <td style="color:var(--text-light);">{{ t.location|default:"—" }}</td>
+          <td style="max-width:320px;"><span style="font-size:0.85rem;color:var(--text);">{{ t.message|truncatechars:90 }}</span></td>
+          <td><span class="stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</span></td>
+          <td>
+            {% if t.active %}
+            <span class="badge badge-green"><i class="fas fa-eye"></i> Visible</span>
+            {% else %}
+            <span class="badge badge-gray"><i class="fas fa-eye-slash"></i> Hidden</span>
+            {% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <a href="{% url 'dashboard:testimonial_edit' t.pk %}" class="btn btn-ghost btn-sm"><i class="fas fa-pencil"></i> Edit</a>
+              <a href="{% url 'dashboard:testimonial_delete' t.pk %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">
+          <div class="empty-state">
+            <i class="fas fa-star"></i>
+            <h3>No testimonials yet</h3>
+            <p>Add your first client review to show on the website.</p>
+            <a href="{% url 'dashboard:testimonial_add' %}" class="btn btn-orange" style="margin-top:16px;">Add Testimonial</a>
+          </div>
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

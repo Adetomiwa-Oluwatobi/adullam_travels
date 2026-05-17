@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Quote Requests{% endblock %}
+{% block page_title %}Quote Requests{% endblock %}
+{% block breadcrumb %}All travel enquiries from your website{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card__header">
+    <div style="display:flex;gap:8px;">
+      <a href="?filter=all"    class="btn btn-sm {% if filter_by == 'all' %}btn-orange{% else %}btn-ghost{% endif %}">All</a>
+      <a href="?filter=unread" class="btn btn-sm {% if filter_by == 'unread' %}btn-orange{% else %}btn-ghost{% endif %}">
+        Unread {% if unread_count %}<span class="badge badge-red">{{ unread_count }}</span>{% endif %}
+      </a>
+      <a href="?filter=read"   class="btn btn-sm {% if filter_by == 'read' %}btn-orange{% else %}btn-ghost{% endif %}">Read</a>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Destination</th>
+          <th>Travellers</th>
+          <th>Travel Date</th>
+          <th>Received</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for q in quotes %}
+        <tr {% if not q.viewed %}style="background:#FFFBF5;"{% endif %}>
+          <td><strong>{{ q.name }}</strong></td>
+          <td style="color:var(--text-light);">{{ q.email }}</td>
+          <td>{{ q.destination }}</td>
+          <td style="text-align:center;">{{ q.travelers }}</td>
+          <td>{{ q.travel_date|date:"M d, Y"|default:"—" }}</td>
+          <td style="color:var(--text-light);font-size:0.82rem;">{{ q.submitted_at|date:"M d, Y" }}</td>
+          <td>
+            {% if not q.viewed %}
+            <span class="badge badge-orange"><i class="fas fa-circle" style="font-size:0.5rem;"></i> New</span>
+            {% else %}
+            <span class="badge badge-gray">Read</span>
+            {% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <a href="{% url 'dashboard:quote_detail' q.pk %}" class="btn btn-ghost btn-sm">Open</a>
+              <a href="{% url 'dashboard:quote_delete' q.pk %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No enquiries yet</h3>
+            <p>When visitors submit a quote request on your website, they'll appear here.</p>
+          </div>
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

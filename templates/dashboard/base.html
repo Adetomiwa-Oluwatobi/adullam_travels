@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Dashboard{% endblock %} — Adullam Travels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar__brand">
+    <div class="sidebar__logo">Adullam <span>Travels</span></div>
+    <div class="sidebar__tagline">Content Dashboard</div>
+  </div>
+
+  <nav class="sidebar__nav">
+    <div class="sidebar__section-label">Overview</div>
+    <a href="{% url 'dashboard:home' %}" class="sidebar__link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+      <i class="fas fa-chart-pie"></i> Dashboard
+    </a>
+
+    <div class="sidebar__section-label" style="margin-top:8px;">Enquiries</div>
+    <a href="{% url 'dashboard:quotes' %}" class="sidebar__link {% if 'quote' in request.resolver_match.url_name %}active{% endif %}">
+      <i class="fas fa-inbox"></i> Quote Requests
+      {% if unread_count %}<span class="sidebar__badge">{{ unread_count }}</span>{% endif %}
+    </a>
+
+    <div class="sidebar__section-label" style="margin-top:8px;">Content</div>
+    <a href="{% url 'dashboard:destinations' %}" class="sidebar__link {% if 'destination' in request.resolver_match.url_name %}active{% endif %}">
+      <i class="fas fa-globe"></i> Destinations
+    </a>
+    <a href="{% url 'dashboard:testimonials' %}" class="sidebar__link {% if 'testimonial' in request.resolver_match.url_name %}active{% endif %}">
+      <i class="fas fa-star"></i> Testimonials
+    </a>
+    <a href="{% url 'dashboard:services' %}" class="sidebar__link {% if 'service' in request.resolver_match.url_name %}active{% endif %}">
+      <i class="fas fa-concierge-bell"></i> Services
+    </a>
+    <a href="{% url 'dashboard:site_content' %}" class="sidebar__link {% if request.resolver_match.url_name == 'site_content' %}active{% endif %}">
+      <i class="fas fa-pen-nib"></i> Site Copy
+    </a>
+
+    <div class="sidebar__section-label" style="margin-top:8px;">Website</div>
+    <a href="{% url 'core:home' %}" target="_blank" class="sidebar__link">
+      <i class="fas fa-external-link-alt"></i> View Website
+    </a>
+    <a href="https://www.instagram.com/adullamtravels" target="_blank" class="sidebar__link">
+      <i class="fab fa-instagram"></i> Instagram
+    </a>
+  </nav>
+
+  <div class="sidebar__footer">
+    <div class="sidebar__user">
+      <div class="sidebar__avatar">{{ request.user.username|first|upper }}</div>
+      <div>
+        <div class="sidebar__username">{{ request.user.username }}</div>
+        <div class="sidebar__role">Admin</div>
+      </div>
+    </div>
+    <a href="{% url 'dashboard:logout' %}" class="sidebar__logout">
+      <i class="fas fa-sign-out-alt"></i> Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div>
+      <div class="topbar__title">{% block page_title %}Dashboard{% endblock %}</div>
+      <div class="topbar__breadcrumb">{% block breadcrumb %}Home{% endblock %}</div>
+    </div>
+    <div class="topbar__actions">
+      {% block topbar_actions %}{% endblock %}
+      <a href="{% url 'core:home' %}" target="_blank" class="btn btn-ghost btn-sm">
+        <i class="fas fa-external-link-alt"></i> View Site
+      </a>
+    </div>
+  </header>
+
+  <div class="page-content">
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="alert alert-{% if msg.tags == 'error' %}error{% else %}success{% endif %}">
+      <i class="fas fa-{% if msg.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %}"></i>
+      {{ msg }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<script>
+// Sidebar mobile toggle
+const sidebar = document.getElementById('sidebar');
+// Image URL preview
+function previewImage(inputId, previewId) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (!input || !preview) return;
+  function update() {
+    const url = input.value.trim();
+    if (url) {
+      preview.style.backgroundImage = `url('${url}')`;
+      preview.classList.add('has-image');
+      preview.innerHTML = '';
+    } else {
+      preview.style.backgroundImage = '';
+      preview.classList.remove('has-image');
+      preview.innerHTML = '<i class="fas fa-image" style="font-size:2rem;opacity:0.2;display:block;text-align:center;"></i><span>Image preview</span>';
+    }
+  }
+  input.addEventListener('input', update);
+  update();
+}
+// Toggle switches
+document.querySelectorAll('[data-toggle]').forEach(el => {
+  const checkbox = document.getElementById(el.dataset.toggle);
+  const toggle = el.querySelector('.toggle');
+  if (!checkbox || !toggle) return;
+  function sync() { toggle.classList.toggle('on', checkbox.checked); }
+  sync();
+  el.addEventListener('click', () => { checkbox.checked = !checkbox.checked; sync(); });
+});
+</script>
+</body>
+</html>

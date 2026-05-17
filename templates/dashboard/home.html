@@ -1,0 +1,131 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block breadcrumb %}Overview{% endblock %}
+
+{% block content %}
+
+<!-- STAT CARDS -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-card__icon stat-card__icon--red">
+      <i class="fas fa-inbox"></i>
+    </div>
+    <div>
+      <div class="stat-card__num">{{ unread_quotes }}</div>
+      <div class="stat-card__label">Unread Enquiries</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon stat-card__icon--orange">
+      <i class="fas fa-paper-plane"></i>
+    </div>
+    <div>
+      <div class="stat-card__num">{{ total_quotes }}</div>
+      <div class="stat-card__label">Total Quote Requests</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon stat-card__icon--blue">
+      <i class="fas fa-globe"></i>
+    </div>
+    <div>
+      <div class="stat-card__num">{{ total_destinations }}</div>
+      <div class="stat-card__label">Destinations</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon stat-card__icon--green">
+      <i class="fas fa-star"></i>
+    </div>
+    <div>
+      <div class="stat-card__num">{{ total_testimonials }}</div>
+      <div class="stat-card__label">Active Testimonials</div>
+    </div>
+  </div>
+</div>
+
+<!-- RECENT QUOTES + QUICK ACTIONS -->
+<div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;">
+
+  <!-- Recent Quotes -->
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title"><i class="fas fa-inbox" style="color:var(--orange);margin-right:8px;"></i>Recent Enquiries</div>
+      <a href="{% url 'dashboard:quotes' %}" class="btn btn-ghost btn-sm">View all</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for q in recent_quotes %}
+          <tr>
+            <td><strong>{{ q.name }}</strong><br><span style="font-size:0.78rem;color:var(--text-light);">{{ q.email }}</span></td>
+            <td>{{ q.destination }}</td>
+            <td style="color:var(--text-light);font-size:0.82rem;">{{ q.submitted_at|date:"M d, Y" }}</td>
+            <td>
+              {% if not q.viewed %}
+              <span class="badge badge-orange">New</span>
+              {% else %}
+              <span class="badge badge-gray">Read</span>
+              {% endif %}
+            </td>
+            <td><a href="{% url 'dashboard:quote_detail' q.pk %}" class="btn btn-ghost btn-sm">Open</a></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="5">
+            <div class="empty-state" style="padding:30px;">
+              <i class="fas fa-inbox"></i>
+              <h3>No enquiries yet</h3>
+              <p>Quote requests from your website will appear here.</p>
+            </div>
+          </td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="card">
+      <div class="card__header"><div class="card__title">Quick Actions</div></div>
+      <div class="card__body" style="display:flex;flex-direction:column;gap:10px;">
+        <a href="{% url 'dashboard:destination_add' %}" class="btn btn-orange btn-full">
+          <i class="fas fa-plus"></i> Add Destination
+        </a>
+        <a href="{% url 'dashboard:testimonial_add' %}" class="btn btn-ghost btn-full">
+          <i class="fas fa-plus"></i> Add Testimonial
+        </a>
+        <a href="{% url 'dashboard:site_content' %}" class="btn btn-ghost btn-full">
+          <i class="fas fa-pen-nib"></i> Edit Site Copy
+        </a>
+        <a href="{% url 'dashboard:quotes' %}?filter=unread" class="btn btn-ghost btn-full">
+          <i class="fas fa-inbox"></i> Unread Enquiries
+          {% if unread_quotes %}<span class="badge badge-red" style="margin-left:auto;">{{ unread_quotes }}</span>{% endif %}
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__header"><div class="card__title">Instagram</div></div>
+      <div class="card__body" style="text-align:center;">
+        <i class="fab fa-instagram" style="font-size:2rem;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;display:block;"></i>
+        <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:14px;">Check your DMs for new travel enquiries from the website.</p>
+        <a href="https://www.instagram.com/adullamtravels" target="_blank" class="btn btn-full" style="background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:white;border-radius:8px;justify-content:center;padding:10px;">
+          <i class="fab fa-instagram"></i> Open Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

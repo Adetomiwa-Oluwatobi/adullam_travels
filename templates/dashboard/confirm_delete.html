@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Delete {{ type }}{% endblock %}
+{% block page_title %}Delete {{ type }}{% endblock %}
+{% block breadcrumb %}Confirm deletion{% endblock %}
+
+{% block content %}
+<div style="display:flex;align-items:center;justify-content:center;min-height:50vh;">
+  <div class="danger-box">
+    <div class="danger-box__icon"><i class="fas fa-exclamation-triangle"></i></div>
+    <div class="danger-box__title">Delete this {{ type }}?</div>
+    <div class="danger-box__text">
+      You're about to delete <strong>{{ object }}</strong>.<br />
+      This cannot be undone.
+    </div>
+    <div class="danger-box__actions">
+      <form method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-lg">
+          <i class="fas fa-trash"></i> Yes, Delete
+        </button>
+      </form>
+      <a href="{% url back %}" class="btn btn-ghost btn-lg">Cancel</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

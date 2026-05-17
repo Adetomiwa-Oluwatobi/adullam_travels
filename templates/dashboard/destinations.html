@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Destinations{% endblock %}
+{% block page_title %}Destinations{% endblock %}
+{% block breadcrumb %}Manage where you take your clients{% endblock %}
+
+{% block topbar_actions %}
+<a href="{% url 'dashboard:destination_add' %}" class="btn btn-orange btn-sm">
+  <i class="fas fa-plus"></i> Add Destination
+</a>
+{% endblock %}
+
+{% block content %}
+{% if destinations %}
+<div class="dest-grid">
+  {% for d in destinations %}
+  <div class="dest-card">
+    <div class="dest-card__img" style="background-image:url('{{ d.image_url }}');">
+      {% if d.featured %}<div class="dest-card__featured">Featured</div>{% endif %}
+    </div>
+    <div class="dest-card__body">
+      <div class="dest-card__name">{{ d.name }}</div>
+      <div class="dest-card__country">{{ d.country }} &mdash; <em style="color:var(--text-light);">{{ d.tagline }}</em></div>
+      <div class="dest-card__actions">
+        <a href="{% url 'dashboard:destination_edit' d.pk %}" class="btn btn-ghost btn-sm"><i class="fas fa-pencil"></i> Edit</a>
+        <a href="{% url 'dashboard:destination_delete' d.pk %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card">
+  <div class="empty-state">
+    <i class="fas fa-globe"></i>
+    <h3>No destinations yet</h3>
+    <p>Add your first destination to display it on the website.</p>
+    <a href="{% url 'dashboard:destination_add' %}" class="btn btn-orange" style="margin-top:16px;">Add Destination</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

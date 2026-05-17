@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+{% block title %}Destinations — Adullam Travels{% endblock %}
+{% block content %}
+
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1800&q=80')">
+  <div class="page-hero__inner">
+    <div class="page-hero__eyebrow">The World Awaits</div>
+    <h1 class="page-hero__title">Our <em style="font-style:italic;font-family:'Cormorant Garamond',serif;">Destinations</em></h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section__inner">
+    <div class="section__header reveal">
+      <div class="section__eyebrow">Explore</div>
+      <h2 class="section__title">From Nigeria to<br>Everywhere</h2>
+      <p class="section__subtitle">We arrange journeys to destinations across every continent. If you can dream it, we can plan it.</p>
+    </div>
+    <div class="destinations-grid">
+      {% for dest in destinations %}
+      <div class="destination-card">
+        <div style="background-image:url('{{ dest.image_url }}');background-size:cover;background-position:center;width:100%;height:100%;transition:transform 0.8s ease;position:absolute;inset:0;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">{{ dest.country }}</div>
+          <div class="destination-card__name">{{ dest.name }}</div>
+          <div class="destination-card__tag">{{ dest.tagline }}</div>
+        </div>
+      </div>
+      {% empty %}
+      {% for dest in default_dests %}
+      <div class="destination-card">
+        <div style="background-image:url('{{ dest.img }}');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body">
+          <div class="destination-card__country">{{ dest.country }}</div>
+          <div class="destination-card__name">{{ dest.name }}</div>
+          <div class="destination-card__tag">{{ dest.tag }}</div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+    {% if not destinations %}
+    <!-- Default hardcoded destinations as fallback -->
+    <style>
+    .destinations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .destination-card { position:relative; border-radius:4px; overflow:hidden; aspect-ratio:3/4; cursor:pointer; }
+    .destination-card:nth-child(1) { grid-column:span 2; aspect-ratio:16/9; }
+    </style>
+    <div class="destinations-grid">
+      <div class="destination-card reveal">
+        <div style="background-image:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">UAE</div><div class="destination-card__name">Dubai</div><div class="destination-card__tag">Gold, glam, and the desert beyond</div></div>
+      </div>
+      <div class="destination-card reveal d1">
+        <div style="background-image:url('https://images.unsplash.com/photo-1519923834699-ef0b7b62baef?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">France</div><div class="destination-card__name">Paris</div><div class="destination-card__tag">Romance in every arrondissement</div></div>
+      </div>
+      <div class="destination-card reveal d2">
+        <div style="background-image:url('https://images.unsplash.com/photo-1526129318344-0be37fc6e8f0?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">United Kingdom</div><div class="destination-card__name">London</div><div class="destination-card__tag">History, fashion, and world culture</div></div>
+      </div>
+      <div class="destination-card reveal d3">
+        <div style="background-image:url('https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">Turkey</div><div class="destination-card__name">Istanbul</div><div class="destination-card__tag">Where continents and cultures collide</div></div>
+      </div>
+      <div class="destination-card reveal d4">
+        <div style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">Canada</div><div class="destination-card__name">Toronto</div><div class="destination-card__tag">Multicultural, electric, world-class</div></div>
+      </div>
+      <div class="destination-card reveal d1">
+        <div style="background-image:url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">Brazil</div><div class="destination-card__name">Rio de Janeiro</div><div class="destination-card__tag">Sun, samba, and breathtaking views</div></div>
+      </div>
+      <div class="destination-card reveal d2">
+        <div style="background-image:url('https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">Maldives</div><div class="destination-card__name">Malé Atoll</div><div class="destination-card__tag">Overwater bliss and turquoise infinity</div></div>
+      </div>
+      <div class="destination-card reveal d3">
+        <div style="background-image:url('https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=700&q=80');background-size:cover;background-position:center;width:100%;height:100%;position:absolute;inset:0;transition:transform 0.8s ease;"></div>
+        <div class="destination-card__overlay"></div>
+        <div class="destination-card__body"><div class="destination-card__country">Japan</div><div class="destination-card__name">Tokyo</div><div class="destination-card__tag">Ancient culture meets neon future</div></div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div style="text-align:center;margin-top:60px;" class="reveal">
+      <p style="font-size:1.1rem;color:var(--secondary);margin-bottom:24px;">Don't see your dream destination? We go everywhere.</p>
+      <a href="{% url 'core:contact' %}" class="btn-primary">Plan a Custom Trip</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner__eyebrow">Anywhere. Anytime.</div>
+  <h2 class="cta-banner__title">Your Destination<br>Is Just a DM Away.</h2>
+  <a href="https://www.instagram.com/adullamtravels?igsh=YzljYTk1ODg3Zg==" target="_blank" class="btn-white"><i class="fab fa-instagram" style="margin-right:8px;"></i>Message Us on Instagram</a>
+</section>
+
+{% endblock %}

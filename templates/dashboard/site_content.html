@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Site Copy{% endblock %}
+{% block page_title %}Site Copy{% endblock %}
+{% block breadcrumb %}Edit the text shown across your website{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div style="max-width:700px;">
+    <div class="form-section">
+      <div class="form-section__title"><i class="fas fa-pen-nib"></i> Website Text</div>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:24px;line-height:1.6;">
+        Edit any of the text below to update what appears on your website. Changes are saved instantly.
+      </p>
+      {% for item in items %}
+      <div class="field">
+        <label>
+          {{ item.key|title|cut:"_"|capfirst }}
+          {% if item.description %}<span class="optional">— {{ item.description }}</span>{% endif %}
+        </label>
+        {% if item.value|length > 80 %}
+        <textarea name="content_{{ item.pk }}">{{ item.value }}</textarea>
+        {% else %}
+        <input type="text" name="content_{{ item.pk }}" value="{{ item.value }}" />
+        {% endif %}
+      </div>
+      {% empty %}
+      <div class="empty-state">
+        <i class="fas fa-pen-nib"></i>
+        <h3>No editable content found</h3>
+        <p>Site content will appear here once the database is seeded.</p>
+      </div>
+      {% endfor %}
+
+      {% if items %}
+      <div style="margin-top:8px;">
+        <button type="submit" class="btn btn-orange btn-lg">
+          <i class="fas fa-save"></i> Save All Changes
+        </button>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</form>
+{% endblock %}

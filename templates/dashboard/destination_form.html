@@ -1,0 +1,80 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}{{ action }} Destination{% endblock %}
+{% block page_title %}{{ action }} Destination{% endblock %}
+{% block breadcrumb %}<a href="{% url 'dashboard:destinations' %}">Destinations</a> / {{ action }}{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;">
+
+    <div>
+      <div class="form-section">
+        <div class="form-section__title"><i class="fas fa-map-marker-alt"></i> Destination Details</div>
+        <div class="field-row">
+          <div class="field">
+            <label>City / Place Name</label>
+            <input type="text" name="name" value="{{ dest.name|default:'' }}" placeholder="e.g. Dubai" required />
+          </div>
+          <div class="field">
+            <label>Country</label>
+            <input type="text" name="country" value="{{ dest.country|default:'' }}" placeholder="e.g. United Arab Emirates" required />
+          </div>
+        </div>
+        <div class="field">
+          <label>Tagline <span class="optional">(short phrase shown on the card)</span></label>
+          <input type="text" name="tagline" value="{{ dest.tagline|default:'' }}" placeholder="e.g. Gold, glam, and the desert beyond" required />
+        </div>
+        <div class="field">
+          <label>Description <span class="optional">(optional — for future use)</span></label>
+          <textarea name="description" placeholder="A longer description of this destination...">{{ dest.description|default:'' }}</textarea>
+        </div>
+        <div class="field">
+          <label>Sort Order <span class="optional">(lower = shows first)</span></label>
+          <input type="number" name="order" value="{{ dest.order|default:'0' }}" min="0" style="max-width:120px;" />
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-section">
+        <div class="form-section__title"><i class="fas fa-image"></i> Destination Image</div>
+        <div class="img-preview" id="imgPreview">
+          <span style="text-align:center;"><i class="fas fa-image" style="font-size:2rem;opacity:0.2;display:block;margin-bottom:6px;"></i>Image preview</span>
+        </div>
+        <div class="field">
+          <label>Image URL</label>
+          <input type="url" name="image_url" id="imageUrl" value="{{ dest.image_url|default:'' }}" placeholder="https://images.unsplash.com/..." required />
+          <div class="field__hint">Tip: go to <strong>unsplash.com</strong>, find a photo, right-click → Copy Image Address</div>
+        </div>
+      </div>
+
+      <div class="form-section" style="margin-top:16px;">
+        <div class="form-section__title"><i class="fas fa-toggle-on"></i> Visibility</div>
+        <input type="checkbox" name="featured" id="featuredCheck" {% if dest.featured %}checked{% endif %} style="display:none;" />
+        <div class="toggle-field" data-toggle="featuredCheck">
+          <div>
+            <div class="toggle-field__label">Show on Homepage</div>
+            <div class="toggle-field__desc">Featured destinations appear in the homepage grid</div>
+          </div>
+          <div class="toggle {% if dest.featured %}on{% endif %}"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button type="submit" class="btn btn-orange btn-full">
+          <i class="fas fa-save"></i> Save Destination
+        </button>
+      </div>
+      <div style="margin-top:10px;">
+        <a href="{% url 'dashboard:destinations' %}" class="btn btn-ghost btn-full">Cancel</a>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<script>
+previewImage('imageUrl', 'imgPreview');
+</script>
+{% endblock %}

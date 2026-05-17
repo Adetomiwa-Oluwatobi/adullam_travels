@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Services{% endblock %}
+{% block page_title %}Services{% endblock %}
+{% block breadcrumb %}Edit the services shown on your website{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Icon</th>
+          <th>Service</th>
+          <th>Short Description</th>
+          <th>Order</th>
+          <th>Visible</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in services %}
+        <tr>
+          <td style="text-align:center;font-size:1.2rem;color:var(--orange);"><i class="fas {{ s.icon }}"></i></td>
+          <td><strong>{{ s.title }}</strong></td>
+          <td style="color:var(--text-light);font-size:0.85rem;max-width:280px;">{{ s.short_description|truncatechars:70 }}</td>
+          <td style="text-align:center;">{{ s.order }}</td>
+          <td>
+            {% if s.active %}
+            <span class="badge badge-green">Visible</span>
+            {% else %}
+            <span class="badge badge-gray">Hidden</span>
+            {% endif %}
+          </td>
+          <td><a href="{% url 'dashboard:service_edit' s.pk %}" class="btn btn-ghost btn-sm"><i class="fas fa-pencil"></i> Edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
