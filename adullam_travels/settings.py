@@ -63,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'adullam_travels.urls'
@@ -126,6 +128,7 @@ USE_TZ        = True
 # STATIC & MEDIA
 # ─────────────────────────────────────────────
 STATIC_URL      = os.environ.get('STATIC_URL', '/static/')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT     = BASE_DIR / os.environ.get('STATIC_ROOT_DIR', 'staticfiles')
 
